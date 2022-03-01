@@ -1,10 +1,15 @@
+// global variables
+const searchResult = document.getElementById('search-result');
+const phoneDetails = document.getElementById('display-details');
+
 // search phone
 const searchPhone = () => {
     const searchInput = document.getElementById('search-input');
     const searchText = searchInput.value;
     searchInput.value = '';
+    phoneDetails.textContent = '';
     if (searchText === '') {
-        document.getElementById('search-result').innerHTML = `<p class="text-danger">!!!Please, Write something</p>`;
+        searchResult.innerHTML = `<p class="text-danger">Please, write something!!!</p>`;
     }
     else {
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
@@ -16,12 +21,10 @@ const searchPhone = () => {
 
 // display phone
 const displayPhone = phones => {
-    const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
-    const phoneDetails = document.getElementById('display-details');
     phoneDetails.textContent = '';
     if (phones.length === 0) {
-        searchResult.innerHTML = `<p class="text-danger fw-bold">!!!No results found</p>`;
+        searchResult.innerHTML = `<p class="text-danger">No results found!!!</p>`;
     }
     else {
         phones.forEach(phone => {
@@ -52,8 +55,6 @@ const searchDetails = phoneId => {
 
 // display details
 const displayDetails = details => {
-    console.log(details);
-    const phoneDetails = document.getElementById('display-details');
     phoneDetails.textContent = '';
     const div = document.createElement('div');
     div.innerHTML = `<div class="card">
@@ -74,4 +75,3 @@ const displayDetails = details => {
       </div>`;
     phoneDetails.appendChild(div);
 }
-{/* <span class="fw-bold"></span> */ }
