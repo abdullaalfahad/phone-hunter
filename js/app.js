@@ -2,7 +2,7 @@
 const searchResult = document.getElementById('search-result');
 const phoneDetails = document.getElementById('display-details');
 
-// search phone
+// search phones
 const searchPhone = () => {
     const searchInput = document.getElementById('search-input');
     const searchText = searchInput.value;
@@ -19,7 +19,7 @@ const searchPhone = () => {
     }
 };
 
-// display phone
+// display phones
 const displayPhone = phones => {
     searchResult.textContent = '';
     phoneDetails.textContent = '';
