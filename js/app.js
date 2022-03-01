@@ -3,10 +3,15 @@ const searchPhone = () => {
     const searchInput = document.getElementById('search-input');
     const searchText = searchInput.value;
     searchInput.value = '';
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(json => displayPhone(json.data.slice(0, 20)))
+    if (searchText === '') {
+        document.getElementById('search-result').innerHTML = `<p class="text-danger">!!!Please, Write something</p>`;
+    }
+    else {
+        const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(json => displayPhone(json.data.slice(0, 20)))
+    }
 };
 
 // display phone
@@ -15,21 +20,26 @@ const displayPhone = phones => {
     searchResult.textContent = '';
     const phoneDetails = document.getElementById('display-details');
     phoneDetails.textContent = '';
-    phones.forEach(phone => {
-        const div = document.createElement('div');
-        div.classList.add('col');
-        div.innerHTML = `
-            <div class="card">
-                <img src="${phone.image}" class="card-img-top w-75 mx-auto mt-3" alt="phone-image">
-                <div class="card-body">
-                    <h5 class="card-title">Brand: ${phone.brand}</h5>
-                    <p class="card-text">Name: ${phone.phone_name}</p>
-                    <button onclick="searchDetails('${phone.slug}')" class="py-2 px-4 bg-dark text-white border-0 rounded w-100">Details</button>
+    if (phones.length === 0) {
+        searchResult.innerHTML = `<p class="text-danger fw-bold">!!!No results found</p>`;
+    }
+    else {
+        phones.forEach(phone => {
+            const div = document.createElement('div');
+            div.classList.add('col');
+            div.innerHTML = `
+                <div class="card">
+                    <img src="${phone.image}" class="card-img-top w-75 mx-auto mt-3" alt="phone-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Brand: ${phone.brand}</h5>
+                        <p class="card-text">Name: ${phone.phone_name}</p>
+                        <button onclick="searchDetails('${phone.slug}')" class="py-2 px-4 bg-dark text-white border-0 rounded w-100">Details</button>
+                    </div>
                 </div>
-            </div>
-        `;
-        searchResult.appendChild(div);
-    });
+            `;
+            searchResult.appendChild(div);
+        });
+    }
 };
 
 // search details
